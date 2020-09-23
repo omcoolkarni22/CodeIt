@@ -1,0 +1,56 @@
+{% extends 'Compiler/base.html' %}
+{% load static %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div id="editor"> </div>
+
+
+<div id="code">
+	<form method="post" id="post-code">
+    {% csrf_token %}
+  <label for="languages">Choose your Weapon:</label>
+  <select id="languages" name="lang">
+    <option value="C">C</option>
+    <option value="CPP14">C++ 14</option>
+    <option value="PYTHON3">Python 3</option>
+    <option value="JAVA8">Java 8</option>
+  </select>
+
+  <div class="form-group">
+<div class="custom-control custom-checkbox" style="margin-top:1%;">
+  <input type="checkbox" class="custom-control-input" id="customCheck1">
+  <label class="custom-control-label" for="customCheck1">Check this for Custom Input</label>
+</div>
+
+    <textarea class="form-control" style="margin-top: 2%;" placeholder="Enter Custom Input Here **If required by the script" id="Test" rows="3"></textarea>
+  </div>
+  <input class="btn btn-secondary" id = "btn" type="submit" style="margin-top: 1%;" value="Run Code">
+
+    </form>
+
+
+
+    <div class="form-group" id="compiling" style="margin-top: 2%;">
+	    <p id="compiling_p" >  </p>
+	 </div>
+
+    <div class="form-group" id="output_show" style="margin-top: 2%;">
+        <label for="TextArea_out"> Output:</label>
+	    <p id="TextArea_out" >  </p>
+	 </div>
+
+        <div class="form-group" id="compile_show" style="margin-top: 2%;">
+            <label for="TextArea_com">Compilation Message:</label>
+	        <p  id="TextArea_com" ></p>
+	 </div>
+
+
+
+</div>
+
+<script src="{% static 'ace/ace.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'js/Fun.js' %}" type="text/javascript"> </script>
+
+
+{% endblock content %}
+

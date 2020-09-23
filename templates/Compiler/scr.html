@@ -1,0 +1,73 @@
+
+
+onclick="DisplayCodes('display/{{ file.id }}');"
+
+<script type="text/javascript">
+
+$("#div_show_files").hide();
+    function DisplayCodes(url) {
+
+              $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function (json) {
+                             alert(json.content);
+                        },
+                        error: function (){
+                            alert("somethings went wrong");
+                        }
+                    });
+        }
+
+</script>
+code = list(codes)[0]
+    # print(code)
+    return JsonResponse({
+        "content": code['content'],
+        "filename": code["filename_f"]
+    })
+
+
+<!-- File Saving -->
+<form class="form-inline" style="margin-top: 2%; margin-left: -2.5%;" id="file_save">
+    {% csrf_token %}
+          <div class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control" id="filename" placeholder="Enter Filename to Save" required>
+          </div>
+          <button type="submit" id="file_save_button" class="btn btn-secondary mb-2">Save</button>
+    </form>
+
+<script type="text/javascript">
+    $(document).on("submit", "#file_save", function(s){
+	    s.preventDefault();
+	    $("#file_save_button").prop("disabled", true);
+	    $("#compiling").show();
+        $("#compiling_p").text("Saving your Code...\nPlease wait !!!");
+
+	    $.ajax({
+	        type: "POST",
+	        url: "fileSave",
+	        data: {
+	                filename: $("#filename").val(),
+	                source: editor.getValue(),
+	                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+	        },
+	        success: function(json){
+	            $("#compiling").hide();
+	            $("#file_save_button").prop("disabled", false);
+	            alert(json.success);
+	        },
+	        error:function(){
+	            $("#compiling").hide();
+	            $("#file_save_button").prop("disabled", false);
+	            alert("Something went wrong on our side, Please try again later!!!");
+	        }
+	    });
+	});
+
+</script>
+
+<li class="nav-item">
+                    <a class="nav-link" href="{% url 'savedCodes' %}">Saved Codes</a>
+            </li>
+
